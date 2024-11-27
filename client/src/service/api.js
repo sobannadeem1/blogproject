@@ -8,7 +8,7 @@ import {
   getType,
 } from "../utils/common-utils";
 
-const API_URL = "https://blogproject-pearl.vercel.app";
+const API_URL = "https://blogproject-blush-eight.vercel.app";
 
 const axiosInstance = axios.create({
   baseURL: API_URL,

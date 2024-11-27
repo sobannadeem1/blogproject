@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -50,14 +50,12 @@ export const loginUser = async (request, response) => {
       const newToken = new Token({ token: refreshToken });
       await newToken.save();
 
-      response
-        .status(200)
-        .json({
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-          name: user.name,
-          username: user.username,
-        });
+      response.status(200).json({
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        name: user.name,
+        username: user.username,
+      });
     } else {
       response.status(400).json({ msg: "Password does not match" });
     }

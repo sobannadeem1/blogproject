@@ -1,5 +1,4 @@
 import { Box, styled, Typography, Link } from "@mui/material";
-import { GitHub, Instagram, Email } from "@mui/icons-material";
 
 const Banner = styled(Box)`
   background-image: url(https://www.wallpapertip.com/wmimgs/23-236943_us-wallpaper-for-website.jpg);
@@ -17,10 +16,6 @@ const Wrapper = styled(Box)`
   }
 `;
 
-const Text = styled(Typography)`
-  color: #878787;
-`;
-
 const About = () => {
   return (
     <Box>
@@ -33,9 +28,7 @@ const About = () => {
             href="https://github.com/sobannadeem1"
             color="inherit"
             target="_blank"
-          >
-            <GitHub />
-          </Link>
+          ></Link>
         </Box>
       </Wrapper>
     </Box>

@@ -66,31 +66,32 @@ const processResponse = (response) => {
 //////////////////////////////
 const ProcessError = async (error) => {
   if (error.response) {
-    // Request made and server responded with a status code
-    // that falls out of the range of 2xx
+    // When the response status is not in the range of 2xx
     if (error.response?.status === 403) {
-      // const { url, config } = error.response;
-      // console.log(error);
-      // try {
-      //     let response = await API.getRefreshToken({ token: getRefreshToken() });
-      //     if (response.isSuccess) {
-      sessionStorage.clear();
-      //         setAccessToken(response.data.accessToken);
+      try {
+        // Attempt to refresh the token
+        const refreshResponse = await API.getRefreshToken({
+          token: getRefreshToken(),
+        });
 
-      //         const requestData = error.toJSON();
+        if (refreshResponse.isSuccess) {
+          // Update the access token
+          setAccessToken(refreshResponse.data.accessToken);
 
-      //         let response1 = await axios({
-      //             method: requestData.config.method,
-      //             url: requestData.config.baseURL + requestData.config.url,
-      //             headers: { "content-type": "application/json", "authorization": getAccessToken() },
-      //             params: requestData.config.params
-      //         });
-      //     }
-      // } catch (error) {
-      //     return Promise.reject(error)
-      // }
+          // Retry the original request with the new token
+          const originalRequest = error.config;
+          originalRequest.headers["authorization"] =
+            refreshResponse.data.accessToken;
+
+          return await axios(originalRequest);
+        }
+      } catch (refreshError) {
+        console.error("Token refresh failed:", refreshError);
+        sessionStorage.clear(); // Clear session if token refresh fails
+        return Promise.reject(refreshError);
+      }
     } else {
-      console.log("ERROR IN RESPONSE: ", error.toJSON());
+      console.error("ERROR IN RESPONSE: ", error.toJSON());
       return {
         isError: true,
         msg: API_NOTIFICATION_MESSAGES.responseFailure,
@@ -98,16 +99,16 @@ const ProcessError = async (error) => {
       };
     }
   } else if (error.request) {
-    // The request was made but no response was received
-    console.log("ERROR IN RESPONSE: ", error.toJSON());
+    // Request was made but no response received
+    console.error("ERROR IN REQUEST: ", error.toJSON());
     return {
       isError: true,
       msg: API_NOTIFICATION_MESSAGES.requestFailure,
       code: "",
     };
   } else {
-    // Something happened in setting up the request that triggered an Error
-    console.log("ERROR IN RESPONSE: ", error.toJSON());
+    // Error occurred while setting up the request
+    console.error("ERROR IN SETUP: ", error.toJSON());
     return {
       isError: true,
       msg: API_NOTIFICATION_MESSAGES.networkError,

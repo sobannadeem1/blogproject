@@ -6,6 +6,7 @@ const Component = styled(AppBar)`
   background: linear-gradient(90deg, #6a11cb, #2575fc);
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  margin: 0; /* Ensure no margin is applied */
 `;
 
 const Container = styled(Toolbar)`

@@ -1,45 +1,72 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import { Grid, Box, Typography, styled } from "@mui/material";
+import { Link, useSearchParams } from "react-router-dom";
+import { API } from "../../../service/api";
 
-import { Grid, Box } from '@mui/material';
-import { Link, useSearchParams } from 'react-router-dom';
+// Components
+import Post from "./Post";
 
-// import { getAllPosts } from '../../../service/api';
-import { API } from '../../../service/api';
+// Styled Components
+const StyledGrid = styled(Grid)(({ theme }) => ({
+  padding: "20px",
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "20px",
+  justifyContent: "center",
+  [theme.breakpoints.down("sm")]: {
+    padding: "10px",
+    gap: "15px",
+  },
+}));
 
-//components
-import Post from './Post';
+const StyledBox = styled(Box)`
+  color: #878787;
+  margin: 30px auto;
+  font-size: 18px;
+  text-align: center;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  }
+`;
 
 const Posts = () => {
-    const [posts, getPosts] = useState([]);
-    
-    const [searchParams] = useSearchParams();
-    const category = searchParams.get('category');
+  const [posts, getPosts] = useState([]);
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category");
 
-    useEffect(() => {
-        const fetchData = async () => { 
-            let response = await API.getAllPosts({ category : category || '' });
-            if (response.isSuccess) {
-                getPosts(response.data);
-            }
-        }
-        fetchData();
-    }, [category]);
+  useEffect(() => {
+    const fetchData = async () => {
+      let response = await API.getAllPosts({ category: category || "" });
+      if (response.isSuccess) {
+        getPosts(response.data);
+      }
+    };
+    fetchData();
+  }, [category]);
 
-    return (
-        <>
-            {
-                posts?.length ? posts.map(post => (
-                    <Grid item lg={3} sm={4} xs={12}>
-                        <Link style={{textDecoration: 'none', color: 'inherit'}} to={`details/${post._id}`}>
-                            <Post post={post} />
-                        </Link>
-                    </Grid>
-                )) : <Box style={{color: '878787', margin: '30px 80px', fontSize: 18}}>
-                        No data is available for selected category
-                    </Box>
-            }
-        </>
-    )
-}
+  return (
+    <StyledGrid container spacing={3}>
+      {posts?.length ? (
+        posts.map((post) => (
+          <Grid item lg={3} md={4} sm={6} xs={12} key={post._id}>
+            <StyledLink to={`details/${post._id}`}>
+              <Post post={post} />
+            </StyledLink>
+          </Grid>
+        ))
+      ) : (
+        <StyledBox>No data is available for the selected category</StyledBox>
+      )}
+    </StyledGrid>
+  );
+};
 
 export default Posts;

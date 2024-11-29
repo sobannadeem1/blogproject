@@ -3,16 +3,28 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Component = styled(AppBar)`
-  background: #ffffff;
-  color: black;
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 `;
 
 const Container = styled(Toolbar)`
   justify-content: center;
+  gap: 40px;
+  font-size: 18px;
+  font-weight: bold;
+
   & > a {
-    padding: 20px;
-    color: #000;
+    padding: 10px 15px;
+    color: #ffffff;
     text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
   }
 `;
 
@@ -20,19 +32,23 @@ const Header = () => {
   const navigate = useNavigate();
 
   const logout = async () => {
-    // Clear any session storage or authentication tokens
     sessionStorage.clear();
-    // Redirect the user to the login page
     navigate("/account");
   };
 
   return (
-    <Component>
+    <Component position="static">
       <Container>
         <Link to="/">HOME</Link>
         <Link to="/about">ABOUT</Link>
         <Link to="/contact">CONTACT</Link>
-        <Link to="/account" onClick={logout}>
+        <Link
+          to="/account"
+          onClick={(e) => {
+            e.preventDefault();
+            logout();
+          }}
+        >
           LOGOUT
         </Link>
       </Container>

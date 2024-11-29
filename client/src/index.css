@@ -1,15 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 
-/* Reset defaults */
-html,
-body {
+/* Resetting default styles for all elements */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Ensure root container (React's div#root) has no padding/margin */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Ensure full height for the viewport */
+  width: 100%;
+}
+
 #root {
+  height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -17,13 +24,6 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-
-/* Additional reset for padding/margin of other elements */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit;
 }
 
 /* Remove default padding from parent elements */

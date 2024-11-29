@@ -6,7 +6,13 @@ const Component = styled(AppBar)`
   background: linear-gradient(90deg, #6a11cb, #2575fc);
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  margin: 0; /* Ensure no margin is applied */
+  margin: 0 !important; /* Override any inherited margin */
+  padding: 0;
+  position: fixed; /* Stick the navbar to the top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Ensure it appears above other content */
 `;
 
 const Container = styled(Toolbar)`

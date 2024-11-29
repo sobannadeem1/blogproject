@@ -7,25 +7,51 @@ import { DataContext } from "../../context/DataProvider";
 const Component = styled(Box)`
   width: 400px;
   margin: 100px auto;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background: linear-gradient(135deg, #ffffff, #f5f7fa);
   overflow: hidden;
-  background: #f9f9f9;
+  transform: translateY(0);
+  animation: slideIn 0.5s ease-in-out;
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 `;
 
 const Image = styled("img")({
-  width: 80,
+  width: 100,
   display: "flex",
-  margin: "30px auto 0",
+  margin: "40px auto 0",
+  animation: "fadeIn 0.8s ease",
+
+  "@keyframes fadeIn": {
+    "0%": {
+      opacity: 0,
+      transform: "scale(0.8)",
+    },
+    "100%": {
+      opacity: 1,
+      transform: "scale(1)",
+    },
+  },
 });
 
 const Wrapper = styled(Box)`
-  padding: 25px 35px;
+  padding: 30px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  background: #fff;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  border-radius: 10px;
 
   & > div {
     width: 100%;
@@ -33,12 +59,12 @@ const Wrapper = styled(Box)`
 
   & > button {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
   }
 
   & > p {
     margin-top: 20px;
-    color: #666;
+    color: #888;
     font-size: 14px;
   }
 `;
@@ -49,11 +75,11 @@ const LoginButton = styled(Button)`
   color: #fff;
   border-radius: 25px;
   font-weight: bold;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 
   &:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 8px 15px rgba(255, 46, 99, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0px 10px 20px rgba(255, 46, 99, 0.4);
     background: linear-gradient(90deg, #ff2e63, #ff7a18);
   }
 `;
@@ -61,21 +87,22 @@ const LoginButton = styled(Button)`
 const SignupButton = styled(Button)`
   text-transform: none;
   color: #ff2e63;
-  background: #f9f9f9;
+  background: #fff;
   border: 1px solid #ff2e63;
   border-radius: 25px;
   font-weight: bold;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 
   &:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 8px 15px rgba(255, 46, 99, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0px 10px 20px rgba(255, 46, 99, 0.2);
   }
 `;
 
 const Text = styled(Typography)`
   font-size: 12px;
-  color: #666;
+  color: #888;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
 `;
 
 const Error = styled(Typography)`
@@ -83,6 +110,25 @@ const Error = styled(Typography)`
   color: #ff4d4d;
   font-weight: 600;
   text-align: center;
+  animation: shake 0.3s ease;
+
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(5px);
+    }
+    75% {
+      transform: translateX(-5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
 `;
 
 const loginInitialValues = {

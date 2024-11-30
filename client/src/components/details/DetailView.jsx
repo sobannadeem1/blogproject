@@ -32,8 +32,7 @@ const Image = styled("img")({
 const EditIcon = styled(Edit)`
   margin: 5px;
   padding: 10px;
-  border: 1px solid #1976d2;
-  border-radius: 50%;
+
   background-color: #e3f2fd;
   cursor: pointer;
   transition: all 0.3s ease;

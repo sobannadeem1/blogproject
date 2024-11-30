@@ -154,7 +154,6 @@ const Login = ({ isUserAuthenticated }) => {
   const imageURL =
     "https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png";
 
-  // Check for existing token on mount
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");
     if (token) {
@@ -195,7 +194,6 @@ const Login = ({ isUserAuthenticated }) => {
           name: response.data.name,
           username: response.data.username,
         });
-        // Ensure this is correctly invoked as a function
         if (typeof isUserAuthenticated === "function") {
           isUserAuthenticated(true); // Call the function properly
         }
@@ -291,7 +289,7 @@ const Login = ({ isUserAuthenticated }) => {
             <SignupButton onClick={signupUser}>Signup</SignupButton>
             <Text style={{ textAlign: "center" }}>OR</Text>
             <LoginButton variant="contained" onClick={toggleSignup}>
-              Already have an account
+              Already have an account?
             </LoginButton>
           </Wrapper>
         )}

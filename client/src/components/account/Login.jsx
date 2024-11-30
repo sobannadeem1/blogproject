@@ -7,35 +7,40 @@ import { DataContext } from "../../context/DataProvider";
 const Component = styled(Box)`
   width: 400px;
   margin: auto;
-  box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
 `;
 
 const Image = styled("img")({
   width: 100,
   display: "flex",
   margin: "auto",
-  padding: "50px 0 0",
+  padding: "30px 0 10px",
 });
 
 const Wrapper = styled(Box)`
-  padding: 25px 35px;
+  padding: 35px 40px;
   display: flex;
-  flex: 1;
-  overflow: auto;
   flex-direction: column;
-  & > div,
-  & > button,
-  & > p {
-    margin-top: 20px;
-  }
+  align-items: center;
+  justify-content: center;
 `;
 
 const LoginButton = styled(Button)`
   text-transform: none;
-  background: #fb641b;
+  background: #2874f0;
   color: #fff;
   height: 48px;
-  border-radius: 2px;
+  border-radius: 30px;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #1d5cbf;
+  }
 `;
 
 const SignupButton = styled(Button)`
@@ -43,21 +48,30 @@ const SignupButton = styled(Button)`
   background: #fff;
   color: #2874f0;
   height: 48px;
-  border-radius: 2px;
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+  border-radius: 30px;
+  width: 100%;
+  font-weight: bold;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
 `;
 
 const Text = styled(Typography)`
   color: #878787;
-  font-size: 12px;
+  font-size: 14px;
+  text-align: center;
 `;
 
 const Error = styled(Typography)`
-  font-size: 10px;
+  font-size: 12px;
   color: #ff6161;
   line-height: 0;
   margin-top: 10px;
   font-weight: 600;
+  text-align: center;
 `;
 
 const loginInitialValues = {
@@ -147,57 +161,81 @@ const Login = ({ isUserAuthenticated }) => {
         {account === "login" ? (
           <Wrapper>
             <TextField
-              variant="standard"
+              variant="outlined"
               value={login.username}
               onChange={(e) => onValueChange(e)}
               name="username"
               label="Enter Username"
+              fullWidth
+              sx={{
+                marginTop: 2,
+                backgroundColor: "#fff",
+                borderRadius: 3,
+              }}
             />
             <TextField
-              variant="standard"
+              variant="outlined"
               value={login.password}
               onChange={(e) => onValueChange(e)}
               name="password"
               label="Enter Password"
+              type="password"
+              fullWidth
+              sx={{
+                marginTop: 2,
+                backgroundColor: "#fff",
+                borderRadius: 3,
+              }}
             />
-
             {error && <Error>{error}</Error>}
-
-            <LoginButton variant="contained" onClick={() => loginUser()}>
-              Login
-            </LoginButton>
-            <Text style={{ textAlign: "center" }}>OR</Text>
-            <SignupButton
-              onClick={() => toggleSignup()}
-              style={{ marginBottom: 50 }}
-            >
+            <LoginButton onClick={() => loginUser()}>Login</LoginButton>
+            <Text>OR</Text>
+            <SignupButton onClick={() => toggleSignup()}>
               Create an account
             </SignupButton>
           </Wrapper>
         ) : (
           <Wrapper>
             <TextField
-              variant="standard"
+              variant="outlined"
               onChange={(e) => onInputChange(e)}
               name="name"
               label="Enter Name"
+              fullWidth
+              sx={{
+                marginTop: 2,
+                backgroundColor: "#fff",
+                borderRadius: 3,
+              }}
             />
             <TextField
-              variant="standard"
+              variant="outlined"
               onChange={(e) => onInputChange(e)}
               name="username"
               label="Enter Username"
+              fullWidth
+              sx={{
+                marginTop: 2,
+                backgroundColor: "#fff",
+                borderRadius: 3,
+              }}
             />
             <TextField
-              variant="standard"
+              variant="outlined"
               onChange={(e) => onInputChange(e)}
               name="password"
               label="Enter Password"
+              type="password"
+              fullWidth
+              sx={{
+                marginTop: 2,
+                backgroundColor: "#fff",
+                borderRadius: 3,
+              }}
             />
-
             <SignupButton onClick={() => signupUser()}>Signup</SignupButton>
-            <Text style={{ textAlign: "center" }}>OR</Text>
-            <LoginButton variant="contained" onClick={() => toggleSignup()}>
+            <Text>OR</Text>
+            <LoginButton onClick={() => toggleSignup()}>
               Already have an account
             </LoginButton>
           </Wrapper>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Component = styled(AppBar)`
-  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  background: linear-gradient(90deg, #ff7a18, #af002d); /* Beautiful gradient */
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   margin: 0 !important;
@@ -12,7 +12,7 @@ const Component = styled(AppBar)`
   top: 0;
   left: 0;
   width: 100%;
-  height: 8vh; /* Adjust the height using viewport height */
+  height: 10vh; /* Increased height */
   z-index: 1000;
 `;
 
@@ -31,7 +31,7 @@ const LinksContainer = styled("div")`
   & > a,
   & > span {
     padding: 1vw; /* Adjust padding using viewport width */
-    color: #000;
+    color: white; /* White text for better visibility */
     text-decoration: none;
     border-radius: 5px;
     transition: all 0.3s ease-in-out;
@@ -46,6 +46,7 @@ const LinksContainer = styled("div")`
     flex-direction: column; /* Stack links vertically on smaller screens */
     padding: 2vh 0; /* Add vertical padding on smaller screens */
     justify-content: center;
+    align-items: center; /* Center items in mobile view */
   }
 `;
 

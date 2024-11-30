@@ -158,10 +158,9 @@ const Login = ({ isUserAuthenticated }) => {
     const token = sessionStorage.getItem("accessToken");
     if (token) {
       isUserAuthenticated?.(true);
-
-      navigate("/"); // Redirect if token exists
+      navigate("/");
     }
-  }, [isUserAuthenticated, navigate]);
+  }, []); // Ensure the dependency array is empty unless variables inside it need tracking
 
   const onValueChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
@@ -239,6 +238,7 @@ const Login = ({ isUserAuthenticated }) => {
                   onChange={onValueChange}
                   name="username"
                   label="Enter Username"
+                  autoComplete="username" // Add this
                 />
                 <TextField
                   variant="standard"
@@ -247,7 +247,9 @@ const Login = ({ isUserAuthenticated }) => {
                   name="password"
                   type="password"
                   label="Enter Password"
+                  autoComplete="current-password" // Add this
                 />
+
                 {error && <Error>{error}</Error>}
                 <LoginButton type="submit" variant="contained">
                   Login
@@ -261,6 +263,7 @@ const Login = ({ isUserAuthenticated }) => {
                   value={signup.name}
                   name="name"
                   label="Enter Full Name"
+                  autoComplete="name" // Add this
                 />
                 <TextField
                   variant="standard"
@@ -268,6 +271,7 @@ const Login = ({ isUserAuthenticated }) => {
                   value={signup.username}
                   name="username"
                   label="Enter Username"
+                  autoComplete="username" // Add this
                 />
                 <TextField
                   variant="standard"
@@ -276,7 +280,9 @@ const Login = ({ isUserAuthenticated }) => {
                   name="password"
                   type="password"
                   label="Enter Password"
+                  autoComplete="new-password" // Add this
                 />
+
                 {error && <Error>{error}</Error>}
                 <LoginButton type="submit">Sign Up</LoginButton>
               </>

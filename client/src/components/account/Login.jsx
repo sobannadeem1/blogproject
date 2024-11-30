@@ -157,9 +157,8 @@ const Login = ({ isUserAuthenticated }) => {
   useEffect(() => {
     const token = sessionStorage.getItem("accessToken");
     if (token) {
-      if (isUserAuthenticated) {
-        isUserAuthenticated(true);
-      }
+      isUserAuthenticated?.(true);
+
       navigate("/"); // Redirect if token exists
     }
   }, [isUserAuthenticated, navigate]);

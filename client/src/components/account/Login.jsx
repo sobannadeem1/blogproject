@@ -158,9 +158,10 @@ const Login = ({ isUserAuthenticated }) => {
     const token = sessionStorage.getItem("accessToken");
     if (token) {
       isUserAuthenticated?.(true);
-      navigate("/");
+      navigate("/"); // Ensure navigation is happening after the first render
     }
-  }, []); // Ensure the dependency array is empty unless variables inside it need tracking
+  }, [navigate, isUserAuthenticated]); // Add necessary dependencies
+  // Ensure the dependency array is empty unless variables inside it need tracking
 
   const onValueChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });

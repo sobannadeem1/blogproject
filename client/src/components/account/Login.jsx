@@ -1,65 +1,134 @@
 import React, { useState, useEffect, useContext } from "react";
-
 import { TextField, Box, Button, Typography, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
 import { API } from "../../service/api";
 import { DataContext } from "../../context/DataProvider";
 
 const Component = styled(Box)`
   width: 400px;
-  margin: auto;
-  box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
+  margin: 100px auto;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background: linear-gradient(135deg, #ffffff, #f5f7fa);
+  overflow: hidden;
+  transform: translateY(0);
+  animation: slideIn 0.5s ease-in-out;
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 `;
 
 const Image = styled("img")({
   width: 100,
   display: "flex",
-  margin: "auto",
-  padding: "50px 0 0",
+  margin: "40px auto 0",
+  animation: "fadeIn 0.8s ease",
+
+  "@keyframes fadeIn": {
+    "0%": {
+      opacity: 0,
+      transform: "scale(0.8)",
+    },
+    "100%": {
+      opacity: 1,
+      transform: "scale(1)",
+    },
+  },
 });
 
 const Wrapper = styled(Box)`
-  padding: 25px 35px;
+  padding: 30px 40px;
   display: flex;
-  flex: 1;
-  overflow: auto;
   flex-direction: column;
-  & > div,
-  & > button,
+  align-items: center;
+  gap: 20px;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  border-radius: 10px;
+
+  & > div {
+    width: 100%;
+  }
+
+  & > button {
+    width: 100%;
+    padding: 12px;
+  }
+
   & > p {
     margin-top: 20px;
+    color: #888;
+    font-size: 14px;
   }
 `;
 
 const LoginButton = styled(Button)`
   text-transform: none;
-  background: #fb641b;
+  background: linear-gradient(90deg, #ff7a18, #ff2e63);
   color: #fff;
-  height: 48px;
-  border-radius: 2px;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 10px 20px rgba(255, 46, 99, 0.4);
+    background: linear-gradient(90deg, #ff2e63, #ff7a18);
+  }
 `;
 
 const SignupButton = styled(Button)`
   text-transform: none;
+  color: #ff2e63;
   background: #fff;
-  color: #2874f0;
-  height: 48px;
-  border-radius: 2px;
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+  border: 1px solid #ff2e63;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 10px 20px rgba(255, 46, 99, 0.2);
+  }
 `;
 
 const Text = styled(Typography)`
-  color: #878787;
   font-size: 12px;
+  color: #888;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
 `;
 
 const Error = styled(Typography)`
-  font-size: 10px;
-  color: #ff6161;
-  line-height: 0;
-  margin-top: 10px;
+  font-size: 14px;
+  color: #ff4d4d;
   font-weight: 600;
+  text-align: center;
+  animation: shake 0.3s ease;
+
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(5px);
+    }
+    75% {
+      transform: translateX(-5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
 `;
 
 const loginInitialValues = {
@@ -86,8 +155,14 @@ const Login = ({ isUserAuthenticated }) => {
     "https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png";
 
   useEffect(() => {
-    showError(false);
-  }, [login]);
+    const token = sessionStorage.getItem("accessToken");
+    if (token) {
+      if (isUserAuthenticated) {
+        isUserAuthenticated(true);
+      }
+      navigate("/"); // Redirect if token exists
+    }
+  }, [isUserAuthenticated, navigate]);
 
   const onValueChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
@@ -98,10 +173,13 @@ const Login = ({ isUserAuthenticated }) => {
   };
 
   const loginUser = async () => {
-    let response = await API.userLogin(login);
+    if (!login.username || !login.password) {
+      showError("Both username and password are required!");
+      return;
+    }
+    const response = await API.userLogin(login);
     if (response.isSuccess) {
       showError("");
-
       sessionStorage.setItem(
         "accessToken",
         `Bearer ${response.data.accessToken}`
@@ -114,28 +192,33 @@ const Login = ({ isUserAuthenticated }) => {
         name: response.data.name,
         username: response.data.username,
       });
-
-      isUserAuthenticated(true);
-      setLogin(loginInitialValues);
+      if (isUserAuthenticated) {
+        isUserAuthenticated(true);
+      }
       navigate("/");
     } else {
-      showError("Something went wrong! please try again later");
+      showError("Invalid username or password!");
     }
   };
 
   const signupUser = async () => {
-    let response = await API.userSignup(signup);
+    if (!signup.name || !signup.username || !signup.password) {
+      showError("All fields are required!");
+      return;
+    }
+    const response = await API.userSignup(signup);
     if (response.isSuccess) {
       showError("");
       setSignup(signupInitialValues);
       toggleAccount("login");
     } else {
-      showError("Something went wrong! please try again later");
+      showError("Signup failed! Please try again.");
     }
   };
 
   const toggleSignup = () => {
-    account === "signup" ? toggleAccount("login") : toggleAccount("signup");
+    toggleAccount(account === "signup" ? "login" : "signup");
+    showError("");
   };
 
   return (
@@ -147,28 +230,24 @@ const Login = ({ isUserAuthenticated }) => {
             <TextField
               variant="standard"
               value={login.username}
-              onChange={(e) => onValueChange(e)}
+              onChange={onValueChange}
               name="username"
               label="Enter Username"
             />
             <TextField
               variant="standard"
               value={login.password}
-              onChange={(e) => onValueChange(e)}
+              onChange={onValueChange}
               name="password"
+              type="password"
               label="Enter Password"
             />
-
             {error && <Error>{error}</Error>}
-
-            <LoginButton variant="contained" onClick={() => loginUser()}>
+            <LoginButton variant="contained" onClick={loginUser}>
               Login
             </LoginButton>
             <Text style={{ textAlign: "center" }}>OR</Text>
-            <SignupButton
-              onClick={() => toggleSignup()}
-              style={{ marginBottom: 50 }}
-            >
+            <SignupButton onClick={toggleSignup}>
               Create an account
             </SignupButton>
           </Wrapper>
@@ -176,28 +255,32 @@ const Login = ({ isUserAuthenticated }) => {
           <Wrapper>
             <TextField
               variant="standard"
-              onChange={(e) => onInputChange(e)}
+              onChange={onInputChange}
+              value={signup.name}
               name="name"
-              label="Enter Name"
+              label="Enter Full Name"
             />
             <TextField
               variant="standard"
-              onChange={(e) => onInputChange(e)}
+              onChange={onInputChange}
+              value={signup.username}
               name="username"
               label="Enter Username"
             />
             <TextField
               variant="standard"
-              onChange={(e) => onInputChange(e)}
+              onChange={onInputChange}
+              value={signup.password}
               name="password"
+              type="password"
               label="Enter Password"
             />
-
-            <SignupButton onClick={() => signupUser()}>Signup</SignupButton>
+            {error && <Error>{error}</Error>}
+            <LoginButton onClick={signupUser}>Sign Up</LoginButton>
             <Text style={{ textAlign: "center" }}>OR</Text>
-            <LoginButton variant="contained" onClick={() => toggleSignup()}>
-              Already have an account
-            </LoginButton>
+            <SignupButton onClick={toggleSignup}>
+              Already have an account?
+            </SignupButton>
           </Wrapper>
         )}
       </Box>

@@ -23,7 +23,7 @@ const Container = styled(Box)(({ theme }) => ({
 
 const Image = styled("img")({
   width: "100%",
-  height: "50vh",
+  height: "auto",
   objectFit: "cover",
   borderRadius: "10px",
   marginBottom: "20px",
@@ -124,18 +124,19 @@ const DetailView = () => {
           </>
         )}
       </Box>
-      <Heading>{post.title}</Heading>
+      <Heading>{post.title || "Loading..."}</Heading>
       <Author>
-        <Link
-          to={`/?username=${post.username}`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <Typography>
-            Author: <span style={{ fontWeight: 600 }}>{post.username}</span>
-          </Typography>
-        </Link>
-        <Typography>{new Date(post.createdDate).toDateString()}</Typography>
+        <Typography>
+          Author:{" "}
+          <span style={{ fontWeight: 600 }}>{post.username || "Unknown"}</span>
+        </Typography>
+        <Typography>
+          {post.createdDate
+            ? new Date(post.createdDate).toDateString()
+            : "Date unavailable"}
+        </Typography>
       </Author>
+
       <Description>{post.description}</Description>
       <Comments post={post} />
     </Container>

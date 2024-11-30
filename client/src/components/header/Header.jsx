@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Component = styled(AppBar)`
-  background: linear-gradient(90deg, #ff7a18, #af002d); /* Beautiful gradient */
+  background: e9c46a;
+  fontfamily: Poppins;
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   margin: 0 !important;

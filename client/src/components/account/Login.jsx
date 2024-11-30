@@ -195,8 +195,11 @@ const Login = ({ isUserAuthenticated }) => {
           name: response.data.name,
           username: response.data.username,
         });
-        isUserAuthenticated(true);
-        navigate("/");
+        // Ensure this is correctly invoked as a function
+        if (typeof isUserAuthenticated === "function") {
+          isUserAuthenticated(true); // Call the function properly
+        }
+        navigate("/"); // Redirect if login is successful
       } else {
         showError("Invalid username or password!");
       }

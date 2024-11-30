@@ -45,7 +45,9 @@ const LinksContainer = styled("div")`
 
   @media (max-width: 768px) {
     flex-direction: row; /* Stack links vertically on smaller screens */
-    padding: 2vw;
+    font-size: 0.8rem
+  padding: 3vw
+  font-family: "Dancing Script", cursive;
   }
 `;
 

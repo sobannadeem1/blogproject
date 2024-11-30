@@ -1,6 +1,16 @@
-import { AppBar, Toolbar, styled } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  styled,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+} from "@mui/material";
+import { Menu as MenuIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Component = styled(AppBar)`
   background: linear-gradient(90deg, #6a11cb, #2575fc);
@@ -16,14 +26,15 @@ const Component = styled(AppBar)`
 `;
 
 const Container = styled(Toolbar)`
-  justify-content: center;
-  gap: 40px;
-  font-size: 18px;
-  font-weight: bold;
+  justify-content: space-between;
+`;
 
-  & > a {
-    padding: 10px 15px;
-    color: #ffffff;
+const LinksContainer = styled("div")`
+  display: flex;
+  & > a,
+  & > span {
+    padding: 20px;
+    color: #000;
     text-decoration: none;
     border-radius: 5px;
     transition: all 0.3s ease-in-out;
@@ -33,31 +44,78 @@ const Container = styled(Toolbar)`
       transform: scale(1.1);
     }
   }
+
+  @media (max-width: 600px) {
+    display: none; /* Hide links on smaller screens */
+  }
+`;
+
+const Hamburger = styled(IconButton)`
+  display: none;
+
+  @media (max-width: 600px) {
+    display: block; /* Show hamburger menu on smaller screens */
+  }
+`;
+
+const MobileDrawer = styled(Drawer)`
+  & .MuiDrawer-paper {
+    width: 250px;
+  }
 `;
 
 const Header = () => {
   const navigate = useNavigate();
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const logout = async () => {
+  const logout = () => {
     sessionStorage.clear();
     navigate("/account");
+  };
+
+  const toggleDrawer = (state) => {
+    setDrawerOpen(state);
   };
 
   return (
     <Component position="static">
       <Container>
-        <Link to="/">HOME</Link>
-        <Link to="/about">ABOUT</Link>
-        <Link to="/contact">CONTACT</Link>
-        <Link
-          to="/account"
-          onClick={(e) => {
-            e.preventDefault();
-            logout();
-          }}
+        {/* Hamburger Menu */}
+        <Hamburger onClick={() => toggleDrawer(true)}>
+          <MenuIcon />
+        </Hamburger>
+
+        {/* Links for larger screens */}
+        <LinksContainer>
+          <Link to="/">HOME</Link>
+          <Link to="/about">ABOUT</Link>
+          <Link to="/contact">CONTACT</Link>
+          <span style={{ cursor: "pointer" }} onClick={logout}>
+            LOGOUT
+          </span>
+        </LinksContainer>
+
+        {/* Mobile Drawer */}
+        <MobileDrawer
+          anchor="left"
+          open={drawerOpen}
+          onClose={() => toggleDrawer(false)}
         >
-          LOGOUT
-        </Link>
+          <List>
+            <ListItem button onClick={() => navigate("/")}>
+              HOME
+            </ListItem>
+            <ListItem button onClick={() => navigate("/about")}>
+              ABOUT
+            </ListItem>
+            <ListItem button onClick={() => navigate("/contact")}>
+              CONTACT
+            </ListItem>
+            <ListItem button onClick={logout}>
+              LOGOUT
+            </ListItem>
+          </List>
+        </MobileDrawer>
       </Container>
     </Component>
   );

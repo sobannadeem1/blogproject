@@ -224,64 +224,71 @@ const Login = ({ isUserAuthenticated }) => {
     <Component>
       <Box>
         <Image src={imageURL} alt="blog" />
-        {account === "login" ? (
-          <Wrapper>
-            <TextField
-              variant="standard"
-              value={login.username}
-              onChange={onValueChange}
-              name="username"
-              label="Enter Username"
-            />
-            <TextField
-              variant="standard"
-              value={login.password}
-              onChange={onValueChange}
-              name="password"
-              type="password"
-              label="Enter Password"
-            />
-            {error && <Error>{error}</Error>}
-            <LoginButton variant="contained" onClick={loginUser}>
-              Login
-            </LoginButton>
-            <Text style={{ textAlign: "center" }}>OR</Text>
-            <SignupButton onClick={toggleSignup}>
-              Create an account
-            </SignupButton>
-          </Wrapper>
-        ) : (
-          <Wrapper>
-            <TextField
-              variant="standard"
-              onChange={onInputChange}
-              value={signup.name}
-              name="name"
-              label="Enter Full Name"
-            />
-            <TextField
-              variant="standard"
-              onChange={onInputChange}
-              value={signup.username}
-              name="username"
-              label="Enter Username"
-            />
-            <TextField
-              variant="standard"
-              onChange={onInputChange}
-              value={signup.password}
-              name="password"
-              type="password"
-              label="Enter Password"
-            />
-            {error && <Error>{error}</Error>}
-            <LoginButton onClick={signupUser}>Sign Up</LoginButton>
-            <Text style={{ textAlign: "center" }}>OR</Text>
-            <SignupButton onClick={toggleSignup}>
-              Already have an account?
-            </SignupButton>
-          </Wrapper>
-        )}
+        <Wrapper>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault(); // Prevent default form submission
+              account === "login" ? loginUser() : signupUser();
+            }}
+          >
+            {account === "login" ? (
+              <>
+                <TextField
+                  variant="standard"
+                  value={login.username}
+                  onChange={onValueChange}
+                  name="username"
+                  label="Enter Username"
+                />
+                <TextField
+                  variant="standard"
+                  value={login.password}
+                  onChange={onValueChange}
+                  name="password"
+                  type="password"
+                  label="Enter Password"
+                />
+                {error && <Error>{error}</Error>}
+                <LoginButton type="submit" variant="contained">
+                  Login
+                </LoginButton>
+              </>
+            ) : (
+              <>
+                <TextField
+                  variant="standard"
+                  onChange={onInputChange}
+                  value={signup.name}
+                  name="name"
+                  label="Enter Full Name"
+                />
+                <TextField
+                  variant="standard"
+                  onChange={onInputChange}
+                  value={signup.username}
+                  name="username"
+                  label="Enter Username"
+                />
+                <TextField
+                  variant="standard"
+                  onChange={onInputChange}
+                  value={signup.password}
+                  name="password"
+                  type="password"
+                  label="Enter Password"
+                />
+                {error && <Error>{error}</Error>}
+                <LoginButton type="submit">Sign Up</LoginButton>
+              </>
+            )}
+          </form>
+          <Text style={{ textAlign: "center" }}>OR</Text>
+          <SignupButton onClick={toggleSignup}>
+            {account === "login"
+              ? "Create an account"
+              : "Already have an account?"}
+          </SignupButton>
+        </Wrapper>
       </Box>
     </Component>
   );

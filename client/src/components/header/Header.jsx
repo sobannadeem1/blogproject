@@ -43,7 +43,7 @@ const LinksContainer = styled("div")`
   }
 
   @media (max-width: 768px) {
-    flex-direction: column; /* Stack links vertically on smaller screens */
+    flex-direction: row; /* Stack links vertically on smaller screens */
     padding: 2vh 0; /* Add vertical padding on smaller screens */
     justify-content: center;
     align-items: center; /* Center items in mobile view */

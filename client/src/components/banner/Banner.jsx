@@ -2,8 +2,8 @@ import { styled, Box, Typography } from "@mui/material";
 
 const Image = styled(Box)`
   width: 100%;
-  background: url(https://blog.nextideatech.com/wp-content/uploads/2022/12/1_FVtCyRdJ6KOr4YswTtwMeA-1024x586.jpeg)
-    center/contain no-repeat #000;
+  background: url(https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg)
+    center/55% repeat-x #000;
   height: 50vh;
   display: flex;
   flex-direction: column;
@@ -29,8 +29,8 @@ const SubHeading = styled(Typography)`
 const Banner = () => {
   return (
     <Image>
-      <Heading style={{ color: "brown" }}>BLOG</Heading>
-      <SubHeading style={{ color: "brown" }}>Code for Interview</SubHeading>
+      <Heading style={{ color: "brown" }}>MERN</Heading>
+      <SubHeading style={{ color: "brown" }}>Blog App</SubHeading>
     </Image>
   );
 };

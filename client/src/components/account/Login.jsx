@@ -179,25 +179,30 @@ const Login = ({ isUserAuthenticated }) => {
       showError("Both username and password are required!");
       return;
     }
-    const response = await API.userLogin(login);
-    if (response.isSuccess) {
-      showError("");
-      sessionStorage.setItem(
-        "accessToken",
-        `Bearer ${response.data.accessToken}`
-      );
-      sessionStorage.setItem(
-        "refreshToken",
-        `Bearer ${response.data.refreshToken}`
-      );
-      setAccount({
-        name: response.data.name,
-        username: response.data.username,
-      });
-      isUserAuthenticated(true);
-      navigate("/");
-    } else {
-      showError("Invalid username or password!");
+    try {
+      const response = await API.userLogin(login);
+      if (response.isSuccess) {
+        showError("");
+        sessionStorage.setItem(
+          "accessToken",
+          `Bearer ${response.data.accessToken}`
+        );
+        sessionStorage.setItem(
+          "refreshToken",
+          `Bearer ${response.data.refreshToken}`
+        );
+        setAccount({
+          name: response.data.name,
+          username: response.data.username,
+        });
+        isUserAuthenticated(true);
+        navigate("/");
+      } else {
+        showError("Invalid username or password!");
+      }
+    } catch (error) {
+      showError("An error occurred during login!");
+      console.error(error);
     }
   };
 
@@ -207,13 +212,18 @@ const Login = ({ isUserAuthenticated }) => {
       showError("All fields are required!");
       return;
     }
-    const response = await API.userSignup(signup);
-    if (response.isSuccess) {
-      showError("");
-      setSignup(signupInitialValues);
-      toggleAccount("login");
-    } else {
-      showError("Signup failed! Please try again.");
+    try {
+      const response = await API.userSignup(signup);
+      if (response.isSuccess) {
+        showError("");
+        setSignup(signupInitialValues);
+        toggleAccount("login");
+      } else {
+        showError("Signup failed! Please try again.");
+      }
+    } catch (error) {
+      showError("An error occurred during signup!");
+      console.error(error);
     }
   };
 

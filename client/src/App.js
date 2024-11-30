@@ -22,7 +22,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 // PrivateRoute component to handle authentication
-const PrivateRoute = ({ isAuthenticated, ...props }) => {
+const PrivateRoute = ({ isAuthenticated }) => {
   const token = sessionStorage.getItem("accessToken");
   return isAuthenticated && token ? (
     <>
@@ -49,7 +49,7 @@ function App() {
   return (
     <DataProvider>
       <BrowserRouter>
-        <Box style={{ marginTop: 64 }}>
+        <Box sx={{ marginTop: 8 }}>
           <Routes>
             {/* Public Route for Login */}
             <Route
@@ -64,21 +64,21 @@ function App() {
               path="/"
               element={<PrivateRoute isAuthenticated={isAuthenticated} />}
             >
-              <Route path="/" element={<Home data-aos="fade-up" />} />
+              <Route index element={<Home data-aos="fade-up" />} />
               <Route
-                path="/create"
+                path="create"
                 element={<CreatePost data-aos="fade-up" />}
               />
               <Route
-                path="/details/:id"
+                path="details/:id"
                 element={<DetailView data-aos="fade-up" />}
               />
               <Route
-                path="/update/:id"
+                path="update/:id"
                 element={<Update data-aos="fade-up" />}
               />
-              <Route path="/about" element={<About data-aos="fade-up" />} />
-              <Route path="/contact" element={<Contact data-aos="fade-up" />} />
+              <Route path="about" element={<About data-aos="fade-up" />} />
+              <Route path="contact" element={<Contact data-aos="fade-up" />} />
             </Route>
           </Routes>
         </Box>

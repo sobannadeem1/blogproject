@@ -5,72 +5,99 @@ import { API } from "../../service/api";
 import { DataContext } from "../../context/DataProvider";
 
 const Component = styled(Box)`
-  width: 400px;
-  margin: auto;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  margin: 50px auto;
+  background: linear-gradient(145deg, #ffffff, #f1f3f6);
+  border-radius: 15px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
 `;
 
 const Image = styled("img")({
-  width: 100,
-  display: "flex",
-  margin: "auto",
-  padding: "30px 0 10px",
+  width: 120,
+  display: "block",
+  margin: "30px auto 20px",
+  borderRadius: "50%",
+  border: "5px solid #2874f0",
+  padding: "10px",
 });
 
 const Wrapper = styled(Box)`
-  padding: 35px 40px;
+  padding: 40px;
   display: flex;
   flex-direction: column;
+  gap: 20px;
   align-items: center;
-  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 15px;
 `;
 
 const LoginButton = styled(Button)`
   text-transform: none;
-  background: #2874f0;
-  color: #fff;
+  background: linear-gradient(90deg, #2874f0, #0056b3);
+  color: white;
   height: 48px;
-  border-radius: 30px;
-  font-weight: bold;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 16px;
   width: 100%;
-  margin-top: 20px;
-  transition: all 0.3s ease;
+  box-shadow: 0px 5px 15px rgba(40, 116, 240, 0.4);
+  transition: all 0.3s ease-in-out;
 
   &:hover {
-    background-color: #1d5cbf;
+    background: linear-gradient(90deg, #0056b3, #2874f0);
   }
 `;
 
 const SignupButton = styled(Button)`
   text-transform: none;
-  background: #fff;
+  background: #ffffff;
   color: #2874f0;
   height: 48px;
-  border-radius: 30px;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 16px;
   width: 100%;
-  font-weight: bold;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
 
   &:hover {
-    background-color: #f1f1f1;
+    background-color: #f9f9f9;
+    box-shadow: 0px 5px 15px rgba(40, 116, 240, 0.2);
+  }
+`;
+
+const TextFieldStyled = styled(TextField)`
+  width: 100%;
+  .MuiInputBase-root {
+    background-color: #f7f9fc;
+    border-radius: 12px;
+    padding: 8px 12px;
+  }
+  .MuiOutlinedInput-root {
+    &:hover fieldset {
+      border-color: #2874f0;
+    }
+    &.Mui-focused fieldset {
+      border: 2px solid #2874f0;
+    }
+  }
+  .MuiInputLabel-root {
+    color: #6c757d;
   }
 `;
 
 const Text = styled(Typography)`
-  color: #878787;
+  color: #6c757d;
   font-size: 14px;
   text-align: center;
 `;
 
 const Error = styled(Typography)`
   font-size: 12px;
-  color: #ff6161;
-  line-height: 0;
-  margin-top: 10px;
+  color: #ff4c4c;
   font-weight: 600;
+  margin-top: -10px;
   text-align: center;
 `;
 

@@ -100,15 +100,28 @@ const Login = ({ isUserAuthenticated }) => {
     username: "",
     password: "",
   });
-  const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [account, setAccountType] = useState("login");
   const navigate = useNavigate();
   const { setAccount } = useContext(DataContext);
 
+  const validateFields = (fields) => {
+    const errors = {};
+    for (const key in fields) {
+      if (!fields[key].trim()) {
+        errors[key] = `${key} is required`;
+      }
+    }
+    return errors;
+  };
+
   const handleLogin = async () => {
+    const errors = validateFields(login);
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+
     setIsLoading(true);
-    setError("");
     let response = await API.userLogin(login);
     setIsLoading(false);
 
@@ -128,13 +141,18 @@ const Login = ({ isUserAuthenticated }) => {
       isUserAuthenticated(true);
       navigate("/");
     } else {
-      setError("Invalid username or password. Please try again.");
+      setFieldErrors({
+        general: "Invalid username or password. Please try again.",
+      });
     }
   };
 
   const handleSignup = async () => {
+    const errors = validateFields(signup);
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+
     setIsLoading(true);
-    setError("");
     let response = await API.userSignup(signup);
     setIsLoading(false);
 
@@ -142,13 +160,13 @@ const Login = ({ isUserAuthenticated }) => {
       setSignup({ name: "", username: "", password: "" });
       setAccountType("login");
     } else {
-      setError("Signup failed. Please try again later.");
+      setFieldErrors({ general: "Signup failed. Please try again later." });
     }
   };
 
   const toggleAccountType = () => {
     setAccountType(account === "login" ? "signup" : "login");
-    setError("");
+    setFieldErrors({});
   };
 
   return (
@@ -166,6 +184,8 @@ const Login = ({ isUserAuthenticated }) => {
               name="username"
               value={login.username}
               onChange={(e) => setLogin({ ...login, username: e.target.value })}
+              error={!!fieldErrors.username}
+              helperText={fieldErrors.username}
               fullWidth
             />
             <StyledTextField
@@ -175,9 +195,13 @@ const Login = ({ isUserAuthenticated }) => {
               type="password"
               value={login.password}
               onChange={(e) => setLogin({ ...login, password: e.target.value })}
+              error={!!fieldErrors.password}
+              helperText={fieldErrors.password}
               fullWidth
             />
-            {error && <ErrorMessage>{error}</ErrorMessage>}
+            {fieldErrors.general && (
+              <ErrorMessage>{fieldErrors.general}</ErrorMessage>
+            )}
             <StyledButton
               className="login"
               onClick={handleLogin}
@@ -202,6 +226,8 @@ const Login = ({ isUserAuthenticated }) => {
               name="name"
               value={signup.name}
               onChange={(e) => setSignup({ ...signup, name: e.target.value })}
+              error={!!fieldErrors.name}
+              helperText={fieldErrors.name}
               fullWidth
             />
             <StyledTextField
@@ -212,6 +238,8 @@ const Login = ({ isUserAuthenticated }) => {
               onChange={(e) =>
                 setSignup({ ...signup, username: e.target.value })
               }
+              error={!!fieldErrors.username}
+              helperText={fieldErrors.username}
               fullWidth
             />
             <StyledTextField
@@ -223,9 +251,13 @@ const Login = ({ isUserAuthenticated }) => {
               onChange={(e) =>
                 setSignup({ ...signup, password: e.target.value })
               }
+              error={!!fieldErrors.password}
+              helperText={fieldErrors.password}
               fullWidth
             />
-            {error && <ErrorMessage>{error}</ErrorMessage>}
+            {fieldErrors.general && (
+              <ErrorMessage>{fieldErrors.general}</ErrorMessage>
+            )}
             <StyledButton
               className="signup"
               onClick={handleSignup}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   TextField,
   Box,
@@ -11,63 +11,73 @@ import { useNavigate } from "react-router-dom";
 import { API } from "../../service/api";
 import { DataContext } from "../../context/DataProvider";
 
+const BackgroundContainer = styled(Box)`
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  padding: 20px;
+`;
+
 const Container = styled(Box)`
   width: 100%;
-  max-width: 450px;
-  margin: 60px auto;
-  padding: 40px;
+  max-width: 400px;
   background: #ffffff;
+  padding: 30px;
   border-radius: 20px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.2);
   text-align: center;
 `;
 
 const Logo = styled("img")`
-  width: 100px;
+  width: 80px;
   margin: 20px auto;
   display: block;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 `;
 
 const StyledButton = styled(Button)`
   width: 100%;
-  height: 48px;
-  border-radius: 24px;
-  margin: 10px 0;
+  height: 50px;
+  border-radius: 25px;
+  margin: 15px 0;
   font-size: 16px;
   font-weight: bold;
   text-transform: none;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
 
   &.login {
-    background: linear-gradient(90deg, #2874f0, #0056b3);
+    background: linear-gradient(90deg, #007aff, #0056e8);
     color: white;
     &:hover {
-      background: linear-gradient(90deg, #0056b3, #2874f0);
+      background: linear-gradient(90deg, #0056e8, #007aff);
     }
   }
 
   &.signup {
-    background: #ffffff;
-    color: #2874f0;
-    box-shadow: 0 3px 10px rgba(40, 116, 240, 0.2);
+    background: transparent;
+    color: #007aff;
+    border: 2px solid #007aff;
     &:hover {
-      background: #f5f5f5;
+      background: #f0f4ff;
     }
   }
 `;
 
 const StyledTextField = styled(TextField)`
-  margin: 10px 0;
+  margin: 12px 0;
   .MuiInputBase-root {
-    background-color: #f9f9f9;
-    border-radius: 10px;
+    background-color: #f8faff;
+    border-radius: 12px;
   }
   .MuiOutlinedInput-root {
     &:hover fieldset {
-      border-color: #2874f0;
+      border-color: #007aff;
     }
     &.Mui-focused fieldset {
-      border: 2px solid #2874f0;
+      border: 2px solid #007aff;
     }
   }
 `;
@@ -75,7 +85,6 @@ const StyledTextField = styled(TextField)`
 const ErrorMessage = styled(Typography)`
   color: #ff4c4c;
   font-size: 14px;
-  font-weight: bold;
   margin: 5px 0;
 `;
 
@@ -144,89 +153,95 @@ const Login = ({ isUserAuthenticated }) => {
   };
 
   return (
-    <Container>
-      <Logo
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScZ_S0UGrzZLuw69vo2ZI8JBBoVRaCil3s8g&s"
-        alt="Logo"
-      />
-      {account === "login" ? (
-        <>
-          <StyledTextField
-            variant="outlined"
-            label="Username"
-            name="username"
-            value={login.username}
-            onChange={(e) => setLogin({ ...login, username: e.target.value })}
-            fullWidth
-          />
-          <StyledTextField
-            variant="outlined"
-            label="Password"
-            name="password"
-            type="password"
-            value={login.password}
-            onChange={(e) => setLogin({ ...login, password: e.target.value })}
-            fullWidth
-          />
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-          <StyledButton
-            className="login"
-            onClick={handleLogin}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <CircularProgress size={24} style={{ color: "white" }} />
-            ) : (
-              "Login"
-            )}
-          </StyledButton>
-          <InfoMessage>OR</InfoMessage>
-          <StyledButton className="signup" onClick={toggleAccountType}>
-            Create an Account
-          </StyledButton>
-        </>
-      ) : (
-        <>
-          <StyledTextField
-            variant="outlined"
-            label="Name"
-            name="name"
-            value={signup.name}
-            onChange={(e) => setSignup({ ...signup, name: e.target.value })}
-            fullWidth
-          />
-          <StyledTextField
-            variant="outlined"
-            label="Username"
-            name="username"
-            value={signup.username}
-            onChange={(e) => setSignup({ ...signup, username: e.target.value })}
-            fullWidth
-          />
-          <StyledTextField
-            variant="outlined"
-            label="Password"
-            name="password"
-            type="password"
-            value={signup.password}
-            onChange={(e) => setSignup({ ...signup, password: e.target.value })}
-            fullWidth
-          />
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-          <StyledButton
-            className="signup"
-            onClick={handleSignup}
-            disabled={isLoading}
-          >
-            {isLoading ? <CircularProgress size={24} /> : "Signup"}
-          </StyledButton>
-          <InfoMessage>OR</InfoMessage>
-          <StyledButton className="login" onClick={toggleAccountType}>
-            Already Have an Account? Login
-          </StyledButton>
-        </>
-      )}
-    </Container>
+    <BackgroundContainer>
+      <Container>
+        <Logo
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScZ_S0UGrzZLuw69vo2ZI8JBBoVRaCil3s8g&s"
+          alt="Logo"
+        />
+        {account === "login" ? (
+          <>
+            <StyledTextField
+              variant="outlined"
+              label="Username"
+              name="username"
+              value={login.username}
+              onChange={(e) => setLogin({ ...login, username: e.target.value })}
+              fullWidth
+            />
+            <StyledTextField
+              variant="outlined"
+              label="Password"
+              name="password"
+              type="password"
+              value={login.password}
+              onChange={(e) => setLogin({ ...login, password: e.target.value })}
+              fullWidth
+            />
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+            <StyledButton
+              className="login"
+              onClick={handleLogin}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <CircularProgress size={24} style={{ color: "white" }} />
+              ) : (
+                "Login"
+              )}
+            </StyledButton>
+            <InfoMessage>OR</InfoMessage>
+            <StyledButton className="signup" onClick={toggleAccountType}>
+              Create an Account
+            </StyledButton>
+          </>
+        ) : (
+          <>
+            <StyledTextField
+              variant="outlined"
+              label="Name"
+              name="name"
+              value={signup.name}
+              onChange={(e) => setSignup({ ...signup, name: e.target.value })}
+              fullWidth
+            />
+            <StyledTextField
+              variant="outlined"
+              label="Username"
+              name="username"
+              value={signup.username}
+              onChange={(e) =>
+                setSignup({ ...signup, username: e.target.value })
+              }
+              fullWidth
+            />
+            <StyledTextField
+              variant="outlined"
+              label="Password"
+              name="password"
+              type="password"
+              value={signup.password}
+              onChange={(e) =>
+                setSignup({ ...signup, password: e.target.value })
+              }
+              fullWidth
+            />
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+            <StyledButton
+              className="signup"
+              onClick={handleSignup}
+              disabled={isLoading}
+            >
+              {isLoading ? <CircularProgress size={24} /> : "Signup"}
+            </StyledButton>
+            <InfoMessage>OR</InfoMessage>
+            <StyledButton className="login" onClick={toggleAccountType}>
+              Already Have an Account? Login
+            </StyledButton>
+          </>
+        )}
+      </Container>
+    </BackgroundContainer>
   );
 };
 

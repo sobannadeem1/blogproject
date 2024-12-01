@@ -16,14 +16,13 @@ const BackgroundContainer = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
   padding: 20px;
 `;
 
 const Container = styled(Box)`
   width: 100%;
   max-width: 400px;
-  background: #ffffff;
+  background: rgb(35 5 87);
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.2);

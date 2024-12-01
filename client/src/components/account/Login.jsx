@@ -26,8 +26,6 @@ const Logo = styled("img")`
   width: 100px;
   margin: 20px auto;
   display: block;
-  border-radius: 50%;
-  border: 4px solid #2874f0;
 `;
 
 const StyledButton = styled(Button)`
@@ -148,7 +146,7 @@ const Login = ({ isUserAuthenticated }) => {
   return (
     <Container>
       <Logo
-        src="https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScZ_S0UGrzZLuw69vo2ZI8JBBoVRaCil3s8g&s"
         alt="Logo"
       />
       {account === "login" ? (

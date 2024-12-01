@@ -22,8 +22,9 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
 const StyledBox = styled(Box)`
   color: #878787;
   margin: 30px auto;
-  font-size: 18px;
+  font-size: 1rem;
   text-align: center;
+  font-family:"Helvetica Neue",Helvetica";
 `;
 
 const StyledLink = styled(Link)`

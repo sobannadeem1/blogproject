@@ -24,7 +24,9 @@ const StyledBox = styled(Box)`
   margin: 30px auto;
   font-size: 1rem;
   text-align: center;
-  font-family:"Helvetica Neue",Helvetica";
+  padding: 2rem;
+
+  font-family: Poppins;
 `;
 
 const StyledLink = styled(Link)`

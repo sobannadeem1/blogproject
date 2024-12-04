@@ -25,8 +25,10 @@ const StyledBox = styled(Box)`
   font-size: 1rem;
   text-align: center;
   padding: 2rem;
-
   font-family: Poppins;
+  border-radius: 8px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
 `;
 
 const StyledLink = styled(Link)`
@@ -37,6 +39,17 @@ const StyledLink = styled(Link)`
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const PostCard = styled(Box)`
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -61,12 +74,14 @@ const Posts = () => {
         posts.map((post) => (
           <Grid item lg={3} md={4} sm={6} xs={12} key={post._id}>
             <StyledLink to={`details/${post._id}`}>
-              <Post post={post} />
+              <PostCard>
+                <Post post={post} />
+              </PostCard>
             </StyledLink>
           </Grid>
         ))
       ) : (
-        <StyledBox>No data is available for the selected category</StyledBox>
+        <StyledBox>No data available for the selected category</StyledBox>
       )}
     </StyledGrid>
   );

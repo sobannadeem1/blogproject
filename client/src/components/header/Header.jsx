@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Component = styled(AppBar)`
-  background: e9c46a;
-  fontfamily: Poppins;
+  background: #e9c46a;
+  font-family: "Poppins", sans-serif;
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   margin: 0 !important;
@@ -23,12 +23,15 @@ const Container = styled(Toolbar)`
   height: 100%;
   display: flex;
   align-items: center; /* Center items vertically */
+  padding: 0 2vw; /* Horizontal spacing using viewport width */
 `;
 
 const LinksContainer = styled("div")`
   display: flex;
-  width: 100%;
+  width: 50%; /* Set width for even spacing */
   justify-content: space-evenly; /* Distribute space evenly between links */
+  align-items: center;
+
   & > a,
   & > span {
     padding: 1vw; /* Adjust padding using viewport width */
@@ -36,6 +39,7 @@ const LinksContainer = styled("div")`
     text-decoration: none;
     border-radius: 5px;
     transition: all 0.3s ease-in-out;
+    font-size: 2vw; /* Adjust font size for responsiveness */
 
     &:hover {
       background: rgba(255, 255, 255, 0.2);
@@ -43,11 +47,19 @@ const LinksContainer = styled("div")`
     }
   }
 
+  @media (max-width: 1024px) {
+    font-size: 1.5vw; /* Adjust font size on medium screens */
+  }
+
   @media (max-width: 768px) {
-    flex-direction: row; /* Stack links vertically on smaller screens */
-    font-size: 0.8rem
-  padding: 3vw
-  font-family: "Dancing Script", cursive;
+    flex-direction: column; /* Stack links vertically on smaller screens */
+    font-size: 4vw; /* Adjust font size for mobile screens */
+    padding: 2vw;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 5vw; /* Larger font size for very small screens */
+    padding: 4vw;
   }
 `;
 

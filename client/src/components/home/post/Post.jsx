@@ -25,10 +25,10 @@ const Image = styled("img")({
   objectFit: "cover",
   height: 180,
   borderRadius: "12px 12px 0 0",
-  transition: `transform 0.3s ease-in-out`,
+  transition: "transform 0.3s ease-in-out", // Fixed: Using regular quotes
 
   "&:hover": {
-    transform: scale(1.05),
+    transform: "scale(1.05)", // Fixed: Properly enclosed scale in quotes
   },
 });
 

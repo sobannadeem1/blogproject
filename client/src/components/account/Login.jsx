@@ -12,6 +12,7 @@ import { API } from "../../service/api";
 import { DataContext } from "../../context/DataProvider";
 
 const BackgroundContainer = styled(Box)`
+  background: #264653;
   min-height: 100vh;
   display: flex;
   align-items: center;

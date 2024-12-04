@@ -1,19 +1,18 @@
-import React from "react"; // Import React
+import React from "react";
 import { AppBar, Toolbar, styled } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 
+// Styled Components
 const Component = styled(AppBar)`
-  background: #264653; /* A more appealing color */
-  font-family: "Montserrat", sans-serif; /* Updated font */
+  background: #264653; /* Navbar background color */
+  font-family: "Montserrat", sans-serif; /* Font style */
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  margin: 0 !important;
-  padding: 0;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 12vh; /* Slightly taller height for better spacing */
+  height: 12vh; /* Height of the navbar */
   z-index: 1000;
 `;
 
@@ -26,14 +25,21 @@ const Container = styled(Toolbar)`
 `;
 
 const Logo = styled(Link)`
-  color: white;
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  font-size: 1.8rem; /* Larger logo text */
-  font-weight: bold;
-  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 
-  &:hover {
-    color: #e9c46a;
+  img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &:hover img {
+    transform: scale(1.1);
   }
 `;
 
@@ -46,7 +52,7 @@ const LinksContainer = styled("div")`
   & > span {
     color: white;
     text-decoration: none;
-    font-size: 1.2rem; /* Readable size */
+    font-size: 1.2rem;
     font-weight: 500;
     border-radius: 5px;
     padding: 0.5rem 1rem;
@@ -59,13 +65,13 @@ const LinksContainer = styled("div")`
   }
 
   @media (max-width: 768px) {
-    flex-direction: column; /* Stack links vertically */
-    gap: 1rem; /* Add spacing between links */
-    width: 100%; /* Full-width in mobile view */
-    position: absolute; /* Absolute positioning for dropdown */
-    top: 12vh; /* Below the navbar */
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    position: absolute;
+    top: 12vh;
     left: 0;
-    background: #264653; /* Match navbar background */
+    background: #264653;
     padding: 1rem 0;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     transform: translateY(-200%);
@@ -95,6 +101,7 @@ const Hamburger = styled("div")`
   }
 `;
 
+// Header Component
 const Header = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -112,17 +119,12 @@ const Header = () => {
     <Component>
       <Container>
         {/* Logo */}
-        <Logo
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScZ_S0UGrzZLuw69vo2ZI8JBBoVRaCil3s8g&s"
-          alt="Logo"
-          style={{
-            width: "80px",
-            margin: "20px auto",
-            display: "block",
-            borderRadius: "50%",
-            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
-          }}
-        />
+        <Logo to="/">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScZ_S0UGrzZLuw69vo2ZI8JBBoVRaCil3s8g&s"
+            alt="Logo"
+          />
+        </Logo>
 
         {/* Hamburger Icon */}
         <Hamburger onClick={toggleMenu}>
